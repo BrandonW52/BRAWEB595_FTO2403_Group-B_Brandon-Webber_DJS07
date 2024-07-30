@@ -1,5 +1,4 @@
-import React from "react";
-
+// Creates the header element
 export default function Header() {
   return (
     <header className="header">
