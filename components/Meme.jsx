@@ -4,16 +4,21 @@ import memesData from "./memesData";
 
 export default function Meme() {
   const [meme, setMeme] = React.useState({
-    topText: "",
-    bottomText: "",
+    topText: "mfw",
+    bottomText: "barbra wins bingo for the 4th time in a row",
     randomImage: "https://i.imgflip.com/1bhw.jpg",
   });
-  const [allMemeImages, setAllMemeImages] = React.useState(memesData);
+  const [allMemes, setAllMemes] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("https://api.imgflip.com/get_memes")
+      .then((res) => res.json())
+      .then((data) => setAllMemes(data.data.memes));
+  }, []);
 
   function getMemeImage() {
-    const memesArray = allMemeImages.data.memes;
-    const randomNumber = Math.floor(Math.random() * memesArray.length);
-    const url = memesArray[randomNumber].url;
+    const randomNumber = Math.floor(Math.random() * allMemes.length);
+    const url = allMemes[randomNumber].url;
     setMeme((prevMeme) => ({
       ...prevMeme,
       randomImage: url,
@@ -61,4 +66,6 @@ export default function Meme() {
 }
 
 // P.S. Come back and add accessibillaty
-// https://i.imgflip.com/1bhw.jpg
+// topText: "mfw",
+//     bottomText: "barbra wins bingo for the 4th time in a row",
+//     randomImage: "https://i.imgflip.com/1bhw.jpg",
